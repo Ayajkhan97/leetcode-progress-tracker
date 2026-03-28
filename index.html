@@ -28,9 +28,14 @@
             <option value="Medium">Medium</option>
             <option value="Hard">Hard</option>
         </select>
-   <div id="source_code" style="text-align: center; margin-top: 20px; color: gray;">
-  <strong>Developed by Ayaj Khan</strong>
-</div>
+    </div>
+
+    <div id="counts_table"></div>
+    <div id="trends_graph"></div>
+
+    <div id="custom_footer" style="text-align: center; margin-top: 30px; margin-bottom: 20px; color: #555; font-family: sans-serif;">
+        <strong>Developed by Ayaj Khan</strong>
+    </div>
 
 <script>
   const studentMapping = {
@@ -74,7 +79,6 @@
     const table = document.querySelector('table');
     if (!table) return;
 
-    // 1. Header sahi karein (agar Student Name column nahi hai toh add karein)
     const headerRow = table.querySelector('thead tr');
     if (headerRow && !headerRow.getAttribute('data-fixed')) {
       const th = document.createElement('th');
@@ -84,14 +88,10 @@
       headerRow.setAttribute('data-fixed', 'true');
     }
 
-    // 2. Rows ka data sahi karein
     const rows = table.querySelectorAll('tbody tr');
     rows.forEach(row => {
-      // Agar is row mein abhi tak Name column add nahi hua hai
       if (row.cells.length > 0 && !row.getAttribute('data-named')) {
-        // Username dhoondo (aksar ye 1st ya 2nd column mein hota hai)
         let username = "";
-        // Hum poori row mein @ dhoondenge ya mapping check karenge
         Array.from(row.cells).forEach(cell => {
            const text = cell.innerText.replace('@', '').trim();
            if (studentMapping[text]) {
@@ -99,23 +99,17 @@
            }
         });
 
-        const realName = studentMapping[username] || "New Student";
-        
-        // Naya cell banakar shuruat mein laga do
+        const realName = studentMapping[username] || "Student";
         const nameTd = document.createElement('td');
         nameTd.innerText = realName;
         nameTd.className = "p-3 font-bold text-gray-800 border-b";
         row.insertBefore(nameTd, row.firstChild);
-        
-        // Mark kar do ki is row ka kaam ho gaya
         row.setAttribute('data-named', 'true');
       }
     });
   }
 
-  // Table load hone ka wait karein aur baar-baar refresh na ho isliye check rakhein
   setInterval(fixTable, 1000);
 </script>
 </body>
-
 </html>
