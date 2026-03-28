@@ -33,6 +33,77 @@
     <div id="trends_graph"></div>
     <div id="source_code"><strong>Source Code:</strong> <a href="https://github.com/adi-g15/leetcode-progress-tracker"
             aria-label="Star adi-g15/leetcode-progress-tracker on GitHub">https://github.com/adi-g15/leetcode-progress-tracker</a></div>
+    <script>
+  const nameMapping = {
+    "Abhishek_231": "Abhishek Singh",
+    "AbhyanshPathak": "Abhyansh Pathak",
+    "adarshpandit123": "Adarsh Pandit",
+    "amithawa4u": "Amit Hawa",
+    "Aditya_pandey827": "Aditya Pandey",
+    "lyshalisha": "Alisha",
+    "Amansinghyadav1234": "Aman Singh Yadav",
+    "Anuragjuyal": "Anurag Juyal",
+    "aparnasingh25": "Aparna Singh",
+    "arunyadav708090": "Arun Yadav",
+    "Aryan-0coder": "Aryan",
+    "Ashtha_Singh": "Astha Singh",
+    "ashp18": "Ashp",
+    "AyajKhan_": "Ayaj Khan",
+    "sunny1236": "Sunny",
+    "Bhawana_Bora": "Bhawana Bora",
+    "Bhumi_Srivastava10": "Bhumi Srivastava",
+    "farman_code_": "Farman",
+    "Ishank_Yadav": "Ishank Yadav",
+    "jatin3106": "Jatin",
+    "kritii06": "Kriti",
+    "Sharma_Manya20": "Manya Sharma",
+    "MohdTahirKhan": "Mohd Tahir Khan",
+    "Naresh_Purohit": "Naresh Purohit",
+    "00AMUL0g0q": "Amul Kumar",
+    "preeti_singh129": "Preeti Singh",
+    "rishavkumar-096": "Rishav Kumar",
+    "rishu07wani": "Rishu Wani",
+    "riteshh_prajapati": "Ritesh Prajapati",
+    "saurabhyadav53": "Saurabh Yadav",
+    "Shams_19": "Shams",
+    "shiv_anshkushwaha": "Shivansh Kushwaha",
+    "Surajchauhan08": "Suraj Chauhan",
+    "Sonu_Chauhan_18": "Sonu Chauhan",
+    // Baki bache huye usernames yahan add kar sakte hain
+  };
+
+  function applyNames() {
+    // 1. Pehle table header mein "Name" ka column jodein (agar nahi hai)
+    const headerRow = document.querySelector('thead tr');
+    if (headerRow && !headerRow.innerText.includes("Student Name")) {
+      const th = document.createElement('th');
+      th.innerText = "Student Name";
+      th.className = "p-3 text-left bg-gray-100 font-bold";
+      headerRow.prepend(th); // Rank ke baad Name lagane ke liye prepend use kiya
+    }
+
+    // 2. Table ki har row mein username ke hisaab se name dalein
+    const rows = document.querySelectorAll('tbody tr');
+    rows.forEach(row => {
+      // Check karein ki is row mein pehle se Name column toh nahi
+      if (row.cells.length < 5) { // Maan lijiye purane 4 columns the
+        const usernameCell = Array.from(row.cells).find(c => c.innerText.includes('@') || nameMapping[c.innerText.trim()]);
+        if (usernameCell) {
+          const rawUser = usernameCell.innerText.replace('@', '').trim();
+          const realName = nameMapping[rawUser] || "Unknown Student";
+          
+          const nameTd = document.createElement('td');
+          nameTd.innerText = realName;
+          nameTd.className = "p-3 font-semibold text-blue-700";
+          row.prepend(nameTd);
+        }
+      }
+    });
+  }
+
+  // Har 2 second mein check karein (kyunki data load hone mein waqt lagta hai)
+  setInterval(applyNames, 2000);
+</script>
 </body>
 
 </html>
