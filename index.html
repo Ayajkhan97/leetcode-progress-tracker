@@ -11,61 +11,48 @@
     <title>Leetcode Progress Watcher</title>
 
     <style>
-        /* ********** Side-by-Side aur Vertical Growth Layout ********** */
+        /* ********** Side-by-Side Layout (Matching Height) ********** */
         .dashboard-container {
             display: flex;
             flex-direction: row;
-            gap: 15px;
+            gap: 10px;
             padding: 10px;
-            align-items: flex-start;
+            /* Yeh line ensure karegi ki Graph aur Table ki height humesha barabar rahe */
+            align-items: stretch; 
         }
 
         #counts_table {
             flex: 1;
-            /* Table ki height bhi graph ke barabar rakhi hai taaki layout sahi dikhe */
-            height: 1200px; 
-            overflow-y: auto;
-            border: 1px solid #ddd;
-            border-radius: 8px;
             background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
         }
 
         #trends_graph {
-            flex: 2; 
-            /* SIRF VERTICAL HEIGHT BADHAYI HAI */
-            height: 1200px; 
-            border: 1px solid #ddd;
-            border-radius: 8px;
+            flex: 2.5; /* Graph ko thoda wide rakha hai taaki clear dikhe */
             background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            /* Height auto matlab jitna bada table, utna bada graph */
+            height: auto; 
+            min-height: 500px; /* Kam se kam itna bada toh rahega hi */
         }
 
         .preferences {
             display: flex;
             gap: 15px;
             justify-content: center;
-            margin-bottom: 20px;
-            padding: 10px;
-            background: #f9fafb;
-            border-bottom: 1px solid #eee;
+            padding: 15px;
+            background: #f3f4f6;
+            border-bottom: 1px solid #ddd;
         }
 
         #custom_footer {
             text-align: center;
-            margin-top: 30px;
-            padding: 15px;
-            border-top: 1px solid #eee;
-            color: #555;
-        }
-
-        /* Mobile responsive */
-        @media (max-width: 1024px) {
-            .dashboard-container {
-                flex-direction: column;
-            }
-            #trends_graph, #counts_table {
-                width: 100%;
-                height: 800px; /* Mobile par thoda chota */
-            }
+            margin-top: 20px;
+            padding: 10px;
+            color: #666;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -73,7 +60,7 @@
 <body>
     <div class="preferences">
         <input
-            placeholder="Show progress in past n days: (Max {{MAX_DAYS}})"
+            placeholder="Show progress in past n days"
             type="number"
             id="days_count"
             min=1
@@ -142,7 +129,7 @@
     if (headerRow && !headerRow.getAttribute('data-fixed')) {
       const th = document.createElement('th');
       th.innerText = "Student Name";
-      th.className = "p-3 text-left bg-blue-600 text-white font-bold sticky top-0";
+      th.className = "p-3 text-left bg-blue-600 text-white font-bold";
       headerRow.insertBefore(th, headerRow.firstChild);
       headerRow.setAttribute('data-fixed', 'true');
     }
@@ -166,7 +153,6 @@
       }
     });
   }
-
   setInterval(fixTable, 1000);
 </script>
 </body>
