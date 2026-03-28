@@ -11,18 +11,19 @@
     <title>Leetcode Progress Watcher</title>
 
     <style>
-        /* ********** Side-by-Side Layout ********** */
+        /* ********** Side-by-Side aur Vertical Growth Layout ********** */
         .dashboard-container {
             display: flex;
-            flex-direction: row; /* Table aur Graph ko side-by-side karne ke liye */
-            gap: 20px;
+            flex-direction: row;
+            gap: 15px;
             padding: 10px;
             align-items: flex-start;
         }
 
         #counts_table {
-            flex: 1; /* Table 30-40% jagah lega */
-            max-height: 800px;
+            flex: 1;
+            /* Table ki height bhi graph ke barabar rakhi hai taaki layout sahi dikhe */
+            height: 1200px; 
             overflow-y: auto;
             border: 1px solid #ddd;
             border-radius: 8px;
@@ -30,8 +31,9 @@
         }
 
         #trends_graph {
-            flex: 2.5; /* Graph ko zyada width di hai taaki bache clear dikhen */
-            height: 800px;
+            flex: 2; 
+            /* SIRF VERTICAL HEIGHT BADHAYI HAI */
+            height: 1200px; 
             border: 1px solid #ddd;
             border-radius: 8px;
             background: white;
@@ -55,13 +57,14 @@
             color: #555;
         }
 
-        /* Mobile par ye upar-niche ho jayega taaki kharab na dikhe */
+        /* Mobile responsive */
         @media (max-width: 1024px) {
             .dashboard-container {
                 flex-direction: column;
             }
             #trends_graph, #counts_table {
                 width: 100%;
+                height: 800px; /* Mobile par thoda chota */
             }
         }
     </style>
@@ -93,7 +96,7 @@
     </div>
 
 <script>
-  // ********** Name Mapping **********
+  // ********** Student Name Mapping **********
   const studentMapping = {
     "Abhishek_231": "Abhishek Singh",
     "AbhyanshPathak": "Abhyansh Pathak",
