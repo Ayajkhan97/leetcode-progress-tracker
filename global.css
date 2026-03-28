@@ -104,3 +104,21 @@ td, th {
 td {
     text-align: center;
 }
+<style>
+    /* Graph ko bada aur readable banane ke liye */
+    #trends_graph {
+        width: 100%;
+        height: 700px; /* Isse height 700px ho jayegi, jo 200 bachon ke liye sahi hai */
+        margin-top: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: white;
+    }
+
+    /* Table ko scrollable banane ke liye (agar bache zyada honge toh page lamba na ho) */
+    #counts_table {
+        max-height: 600px;
+        overflow-y: auto;
+        margin-bottom: 30px;
+    }
+</style>
