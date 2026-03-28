@@ -9,6 +9,65 @@
     <link rel="stylesheet" href="./global.css" />
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <title>Leetcode Progress Watcher</title>
+
+    <style>
+        /* ********** Side-by-Side aur Vertical Growth Layout ********** */
+        .dashboard-container {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            padding: 10px;
+            align-items: flex-start;
+        }
+
+        #counts_table {
+            flex: 1;
+            /* Table ki height bhi graph ke barabar rakhi hai taaki layout sahi dikhe */
+            height: 1200px; 
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+        }
+
+        #trends_graph {
+            flex: 2; 
+            /* SIRF VERTICAL HEIGHT BADHAYI HAI */
+            height: 1200px; 
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .preferences {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #f9fafb;
+            border-bottom: 1px solid #eee;
+        }
+
+        #custom_footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            border-top: 1px solid #eee;
+            color: #555;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 1024px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            #trends_graph, #counts_table {
+                width: 100%;
+                height: 800px; /* Mobile par thoda chota */
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -19,10 +78,7 @@
             id="days_count"
             min=1
         />
-        <select
-            placeholder="Difficulty Level"
-            id="difficulty_level"
-        >
+        <select id="difficulty_level">
             <option value="All">All</option>
             <option value="Easy">Easy</option>
             <option value="Medium">Medium</option>
@@ -30,14 +86,17 @@
         </select>
     </div>
 
-    <div id="counts_table"></div>
-    <div id="trends_graph"></div>
+    <div class="dashboard-container">
+        <div id="counts_table"></div>
+        <div id="trends_graph"></div>
+    </div>
 
-    <div id="custom_footer" style="text-align: center; margin-top: 30px; margin-bottom: 20px; color: #555; font-family: sans-serif;">
+    <div id="custom_footer">
         <strong>Developed by Ayaj Khan</strong>
     </div>
 
 <script>
+  // ********** Student Name Mapping **********
   const studentMapping = {
     "Abhishek_231": "Abhishek Singh",
     "AbhyanshPathak": "Abhyansh Pathak",
@@ -83,7 +142,7 @@
     if (headerRow && !headerRow.getAttribute('data-fixed')) {
       const th = document.createElement('th');
       th.innerText = "Student Name";
-      th.className = "p-3 text-left bg-blue-600 text-white font-bold";
+      th.className = "p-3 text-left bg-blue-600 text-white font-bold sticky top-0";
       headerRow.insertBefore(th, headerRow.firstChild);
       headerRow.setAttribute('data-fixed', 'true');
     }
@@ -98,7 +157,6 @@
              username = text;
            }
         });
-
         const realName = studentMapping[username] || "Student";
         const nameTd = document.createElement('td');
         nameTd.innerText = realName;
