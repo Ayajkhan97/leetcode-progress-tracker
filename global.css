@@ -11,39 +11,58 @@
     <title>Leetcode Progress Watcher</title>
 
     <style>
-        /* ********** Graph aur Table ka Size Sahi Karein ********** */
-        #trends_graph {
-            width: 100%;
-            height: 800px; /* Isse graph bada ho jayega aur saare 200 bache dikhenge */
-            margin-top: 30px;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            background: white;
+        /* ********** Side-by-Side Layout ********** */
+        .dashboard-container {
+            display: flex;
+            flex-direction: row; /* Table aur Graph ko side-by-side karne ke liye */
+            gap: 20px;
             padding: 10px;
+            align-items: flex-start;
         }
 
         #counts_table {
-            max-height: 500px; /* Table ko scrollable banane ke liye */
+            flex: 1; /* Table 30-40% jagah lega */
+            max-height: 800px;
             overflow-y: auto;
-            margin-bottom: 40px;
-            border: 1px solid #eee;
+            border: 1px solid #ddd;
             border-radius: 8px;
+            background: white;
+        }
+
+        #trends_graph {
+            flex: 2.5; /* Graph ko zyada width di hai taaki bache clear dikhen */
+            height: 800px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
         }
 
         .preferences {
-            margin-bottom: 25px;
             display: flex;
             gap: 15px;
             justify-content: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #f9fafb;
+            border-bottom: 1px solid #eee;
         }
 
         #custom_footer {
-            text-align: center; 
-            margin-top: 40px; 
-            padding: 20px;
-            color: #4b5563; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
             border-top: 1px solid #eee;
+            color: #555;
+        }
+
+        /* Mobile par ye upar-niche ho jayega taaki kharab na dikhe */
+        @media (max-width: 1024px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            #trends_graph, #counts_table {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -56,10 +75,7 @@
             id="days_count"
             min=1
         />
-        <select
-            placeholder="Difficulty Level"
-            id="difficulty_level"
-        >
+        <select id="difficulty_level">
             <option value="All">All</option>
             <option value="Easy">Easy</option>
             <option value="Medium">Medium</option>
@@ -67,15 +83,17 @@
         </select>
     </div>
 
-    <div id="counts_table"></div>
-    <div id="trends_graph"></div>
+    <div class="dashboard-container">
+        <div id="counts_table"></div>
+        <div id="trends_graph"></div>
+    </div>
 
     <div id="custom_footer">
         <strong>Developed by Ayaj Khan</strong>
     </div>
 
 <script>
-  // ********** Student Name Mapping **********
+  // ********** Name Mapping **********
   const studentMapping = {
     "Abhishek_231": "Abhishek Singh",
     "AbhyanshPathak": "Abhyansh Pathak",
@@ -117,7 +135,6 @@
     const table = document.querySelector('table');
     if (!table) return;
 
-    // 1. Header Fix
     const headerRow = table.querySelector('thead tr');
     if (headerRow && !headerRow.getAttribute('data-fixed')) {
       const th = document.createElement('th');
@@ -127,7 +144,6 @@
       headerRow.setAttribute('data-fixed', 'true');
     }
 
-    // 2. Rows Fix
     const rows = table.querySelectorAll('tbody tr');
     rows.forEach(row => {
       if (row.cells.length > 0 && !row.getAttribute('data-named')) {
@@ -138,7 +154,6 @@
              username = text;
            }
         });
-
         const realName = studentMapping[username] || "Student";
         const nameTd = document.createElement('td');
         nameTd.innerText = realName;
@@ -149,7 +164,6 @@
     });
   }
 
-  // Refresh mapping every second to catch dynamic loads
   setInterval(fixTable, 1000);
 </script>
 </body>
